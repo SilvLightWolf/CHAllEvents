@@ -60,6 +60,7 @@ public class MCEntityMountEvent {
                 Target t = Target.UNKNOWN;
 
                 array.put("mount", new CString(evt.getMount().getUniqueId().toString(), t));
+                array.put("id", new CString(evt.getEntity().getUniqueId().toString(), t));
 
                 array.put("macrotype", new CString("entity", t));
                 array.put("event_type", new CString(getName(), t));
@@ -110,6 +111,11 @@ public class MCEntityMountEvent {
         }
 
         @Override
+        public MCEntity getEntity() {
+            return new BukkitMCEntity(e.getEntity());
+        }
+
+        @Override
         public boolean isCancelled() {
             return e.isCancelled();
         }
@@ -123,6 +129,7 @@ public class MCEntityMountEvent {
     public interface CHEntityMountInterface extends BindableEvent {
 
         public MCEntity getMount();
+        public MCEntity getEntity();
         public boolean isCancelled();
         public void setCancelled(boolean cancel);
     }

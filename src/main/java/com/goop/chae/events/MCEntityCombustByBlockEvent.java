@@ -60,13 +60,17 @@ public class MCEntityCombustByBlockEvent {
 
                 array.put("duration", evt.getDuration());
 
-                CArray block = new CArray(t);
-                block.set("x", new CInt(evt.getBlock().getLocation().getBlockX(), t), t);
-                block.set("y", new CInt(evt.getBlock().getLocation().getBlockY(), t), t);
-                block.set("z", new CInt(evt.getBlock().getLocation().getBlockZ(), t), t);
-                block.set("world", evt.getBlock().getLocation().getWorld().getName());
-                block.set("block", evt.getBlock().getType().getName());
-                array.put("combuster", block);
+                if(evt.getBlock() != null) {
+                    if(evt.getBlock().getState().getLocation() != null) {
+                        CArray block = new CArray(t);
+                        block.set("x", new CInt(evt.getBlock().getLocation().getBlockX(), t), t);
+                        block.set("y", new CInt(evt.getBlock().getLocation().getBlockY(), t), t);
+                        block.set("z", new CInt(evt.getBlock().getLocation().getBlockZ(), t), t);
+                        block.set("world", evt.getBlock().getLocation().getWorld().getName());
+                        block.set("block", evt.getBlock().getType().getName());
+                        array.put("combuster", block);
+                    }
+                }
 
                 array.put("macrotype", new CString("entity", t));
                 array.put("event_type", new CString(getName(), t));
@@ -83,7 +87,7 @@ public class MCEntityCombustByBlockEvent {
 
         @Override
         public boolean modifyEvent(String key, Construct value, BindableEvent event) {
-            if(key.equalsIgnoreCase("amount")){
+            if(key.equalsIgnoreCase("duration")){
                 if(value instanceof CInt) {
                     ((CHEntityCombustByBlockInterface) event).setDuration(Integer.parseInt(value.getValue()));
                     return true;
@@ -152,5 +156,6 @@ public class MCEntityCombustByBlockEvent {
         public MCBlock getBlock();
         public void setCancelled(boolean cancel);
         public void setDuration(int duration);
+
     }
 }

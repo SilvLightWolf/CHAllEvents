@@ -3,6 +3,8 @@ package com.goop.chae.events;
 import com.goop.chae.Thrower;
 import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
+import com.laytonsmith.abstraction.MCEntity;
+import com.laytonsmith.abstraction.bukkit.entities.BukkitMCEntity;
 import com.laytonsmith.annotations.api;
 import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.events.AbstractEvent;
@@ -53,6 +55,7 @@ public class MCEntityAirChangeEvent {
                 Target t = Target.UNKNOWN;
 
                 array.put("amount", evt.getAmount());
+                array.put("id", new CString(evt.getEntity().getUniqueId().toString(), t));
 
                 array.put("macrotype", new CString("entity", t));
                 array.put("event_type", new CString(getName(), t));
@@ -114,6 +117,11 @@ public class MCEntityAirChangeEvent {
         }
 
         @Override
+        public MCEntity getEntity() {
+            return new BukkitMCEntity(e.getEntity());
+        }
+
+        @Override
         public void setAmount(int amount) {
             e.setAmount(amount);
         }
@@ -128,6 +136,7 @@ public class MCEntityAirChangeEvent {
 
         public CInt getAmount();
         public boolean isCancelled();
+        public MCEntity getEntity();
         public void setAmount(int amount);
         public void setCancelled(boolean cancelled);
 

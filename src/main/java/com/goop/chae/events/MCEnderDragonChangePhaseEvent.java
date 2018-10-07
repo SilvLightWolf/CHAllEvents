@@ -6,10 +6,7 @@ import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCEntity;
 import com.laytonsmith.abstraction.bukkit.entities.BukkitMCEntity;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.constructs.CArray;
-import com.laytonsmith.core.constructs.CString;
-import com.laytonsmith.core.constructs.Construct;
-import com.laytonsmith.core.constructs.Target;
+import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.events.AbstractEvent;
 import com.laytonsmith.core.events.BindableEvent;
 import com.laytonsmith.core.events.Driver;
@@ -144,8 +141,8 @@ public class MCEnderDragonChangePhaseEvent {
         }
 
         @Override
-        public CString getCurrentPhase() {
-            return new CString(e.getCurrentPhase().name(), Target.UNKNOWN);
+        public Construct getCurrentPhase() {
+            return (e.getCurrentPhase() == null) ? CNull.NULL : new CString(e.getCurrentPhase().name(), Target.UNKNOWN);
         }
 
         @Override
@@ -154,8 +151,8 @@ public class MCEnderDragonChangePhaseEvent {
         }
 
         @Override
-        public CString getNewPhase() {
-            return new CString(e.getNewPhase().name(), Target.UNKNOWN);
+        public Construct getNewPhase() {
+            return (e.getNewPhase() == null) ? CNull.NULL : new CString(e.getNewPhase().name(), Target.UNKNOWN);
         }
 
         @Override
@@ -176,9 +173,9 @@ public class MCEnderDragonChangePhaseEvent {
 
     public interface CHEnderDragonChangePhaseInterface extends BindableEvent {
 
-        public CString getCurrentPhase();
+        public Construct getCurrentPhase();
         public MCEntity getEntity();
-        public CString getNewPhase();
+        public Construct getNewPhase();
         public boolean isCancelled();
         public void setCancelled(boolean cancel);
         public void setNewPhase(EnderDragon.Phase newPhase);

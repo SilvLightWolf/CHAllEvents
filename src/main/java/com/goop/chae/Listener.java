@@ -38,6 +38,7 @@ public class Listener implements org.bukkit.event.Listener {
         BlockExplodeEvent.getHandlerList().unregister(listener);
         BlockFertilizeEvent.getHandlerList().unregister(listener);
         BlockPhysicsEvent.getHandlerList().unregister(listener);
+        BlockRedstoneEvent.getHandlerList().unregister(listener);
         BrewEvent.getHandlerList().unregister(listener);
         BrewingStandFuelEvent.getHandlerList().unregister(listener);
         CauldronLevelChangeEvent.getHandlerList().unregister(listener);
@@ -114,11 +115,11 @@ public class Listener implements org.bukkit.event.Listener {
                 new MCBlockRedstoneEvent.CHBlockRedstoneEvent(e));
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onEvent11(BrewEvent e){
         EventUtils.TriggerListener(Driver.EXTENSION, "brew",
                 new MCBrewEvent.CHBrewEvent(e));
-    }
+    } NOT WORKING */
 
     @EventHandler
     public void onEvent12(BrewingStandFuelEvent e){
@@ -164,7 +165,7 @@ public class Listener implements org.bukkit.event.Listener {
 
     @EventHandler
     public void onEvent19(EnderDragonChangePhaseEvent e){
-        EventUtils.TriggerListener(Driver.EXTENSION, "ender_dragon_Change_phase",
+        EventUtils.TriggerListener(Driver.EXTENSION, "ender_dragon_change_phase",
                 new MCEnderDragonChangePhaseEvent.CHEnderDragonChangePhaseEvent(e));
     }
 
@@ -190,7 +191,7 @@ public class Listener implements org.bukkit.event.Listener {
     public void onEvent23(EntityCreatePortalEvent e){
         EventUtils.TriggerListener(Driver.EXTENSION, "entity_create_portal",
                 new MCEntityCreatePortalEvent.CHEntityCreatePortalEvent(e));
-    }
+    } // Not working
 
     @EventHandler
     public void onEvent24(EntityDismountEvent e){

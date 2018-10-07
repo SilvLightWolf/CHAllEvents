@@ -72,7 +72,7 @@ public class MCEntityCombustByEntityEvent {
 
         @Override
         public boolean modifyEvent(String key, Construct value, BindableEvent event) {
-            if(key.equalsIgnoreCase("amount")){
+            if(key.equalsIgnoreCase("duration")){
                 if(value instanceof CInt) {
                     ((CHEntityCombustByEntityInterface) event).setDuration(Integer.parseInt(value.getValue()));
                     return true;
