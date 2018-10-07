@@ -1,5 +1,6 @@
 package com.goop.chae.events;
 
+import com.goop.chae.Thrower;
 import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.MCEntity;
@@ -76,6 +77,18 @@ public class MCCreeperPowerEvent {
 
         @Override
         public boolean modifyEvent(String key, Construct value, BindableEvent event) {
+            if(key.equalsIgnoreCase("cancelled")) {
+                switch (value.getValue().toLowerCase()) {
+                    case "true":
+                        ((CHCreeperPowerInterface) event).setCancelled(true);
+                        return true;
+                    case "false":
+                        ((CHCreeperPowerInterface) event).setCancelled(false);
+                        return true;
+                    default:
+                        Thrower.throwCRECastException1("boolean", 2, "modify_event");
+                }
+            }
             return false;
         }
     }

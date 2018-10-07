@@ -1,5 +1,6 @@
 package com.goop.chae.events;
 
+import com.goop.chae.Thrower;
 import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
 import com.laytonsmith.abstraction.blocks.MCBlock;
@@ -82,6 +83,17 @@ public class MCBlockExplodeEvent {
                 if(value instanceof CDouble || value instanceof CInt){
                     ((CHBlockExplodeInterface)event).setYield(Float.valueOf(value.getValue()));
                     return true;
+                }
+            }else if(key.equalsIgnoreCase("cancelled")) {
+                switch (value.getValue().toLowerCase()) {
+                    case "true":
+                        ((CHBlockExplodeInterface)event).setCancelled(true);
+                        return true;
+                    case "false":
+                        ((CHBlockExplodeInterface)event).setCancelled(false);
+                        return true;
+                    default:
+                        Thrower.throwCRECastException1("boolean", 2, "modify_event");
                 }
             }
             return false;

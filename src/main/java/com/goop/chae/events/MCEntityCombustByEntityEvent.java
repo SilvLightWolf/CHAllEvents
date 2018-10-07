@@ -79,6 +79,17 @@ public class MCEntityCombustByEntityEvent {
                 }else{
                     Thrower.throwCRECastException1("int", 2, "modify_event");
                 }
+            }else if(key.equalsIgnoreCase("cancelled")) {
+                switch (value.getValue().toLowerCase()) {
+                    case "true":
+                        ((CHEntityCombustByEntityInterface)event).setCancelled(true);
+                        return true;
+                    case "false":
+                        ((CHEntityCombustByEntityInterface)event).setCancelled(false);
+                        return true;
+                    default:
+                        Thrower.throwCRECastException1("boolean", 2, "modify_event");
+                }
             }
             return false;
         }

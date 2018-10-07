@@ -116,6 +116,17 @@ public class MCEnderDragonChangePhaseEvent {
                     default:
                         Thrower.throwCREIllegalException1(value.getValue());
                 }
+            }else if(key.equalsIgnoreCase("cancelled")) {
+                switch (value.getValue().toLowerCase()) {
+                    case "true":
+                        ((CHEnderDragonChangePhaseInterface)event).setCancelled(true);
+                        return true;
+                    case "false":
+                        ((CHEnderDragonChangePhaseInterface)event).setCancelled(false);
+                        return true;
+                    default:
+                        Thrower.throwCRECastException1("boolean", 2, "modify_event");
+                }
             }
             return false;
         }
