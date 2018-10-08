@@ -115,11 +115,11 @@ public class Listener implements org.bukkit.event.Listener {
                 new MCBlockRedstoneEvent.CHBlockRedstoneEvent(e));
     }
 
-    /*@EventHandler
+    @EventHandler
     public void onEvent11(BrewEvent e){
         EventUtils.TriggerListener(Driver.EXTENSION, "brew",
                 new MCBrewEvent.CHBrewEvent(e));
-    } NOT WORKING */
+    }
 
     @EventHandler
     public void onEvent12(BrewingStandFuelEvent e){

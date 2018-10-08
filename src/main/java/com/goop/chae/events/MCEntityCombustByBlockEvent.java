@@ -3,12 +3,9 @@ package com.goop.chae.events;
 import com.goop.chae.Thrower;
 import com.laytonsmith.PureUtilities.SimpleVersion;
 import com.laytonsmith.PureUtilities.Version;
-import com.laytonsmith.abstraction.MCEntity;
 import com.laytonsmith.abstraction.blocks.MCBlock;
 import com.laytonsmith.abstraction.bukkit.blocks.BukkitMCBlock;
-import com.laytonsmith.abstraction.bukkit.entities.BukkitMCEntity;
 import com.laytonsmith.annotations.api;
-import com.laytonsmith.core.ObjectGenerator;
 import com.laytonsmith.core.constructs.*;
 import com.laytonsmith.core.events.AbstractEvent;
 import com.laytonsmith.core.events.BindableEvent;
@@ -16,7 +13,6 @@ import com.laytonsmith.core.events.Driver;
 import com.laytonsmith.core.exceptions.EventException;
 import com.laytonsmith.core.exceptions.PrefilterNonMatchException;
 import org.bukkit.event.entity.EntityCombustByBlockEvent;
-import org.bukkit.event.entity.EntityCombustByEntityEvent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -60,16 +56,17 @@ public class MCEntityCombustByBlockEvent {
 
                 array.put("duration", evt.getDuration());
 
-                if(evt.getBlock() != null) {
-                    if(evt.getBlock().getState().getLocation() != null) {
-                        CArray block = new CArray(t);
-                        block.set("x", new CInt(evt.getBlock().getLocation().getBlockX(), t), t);
-                        block.set("y", new CInt(evt.getBlock().getLocation().getBlockY(), t), t);
-                        block.set("z", new CInt(evt.getBlock().getLocation().getBlockZ(), t), t);
-                        block.set("world", evt.getBlock().getLocation().getWorld().getName());
-                        block.set("block", evt.getBlock().getType().getName());
-                        array.put("combuster", block);
-                    }
+                if(evt.getBlock() instanceof CNull){
+                    array.put("combuster", CNull.NULL);
+                }else{
+                    CArray block = new CArray(t);
+                    MCBlock b = (MCBlock) evt.getBlock();
+                    block.set("x", new CInt(b.getLocation().getBlockX(), t), t);
+                    block.set("y", new CInt(b.getLocation().getBlockY(), t), t);
+                    block.set("z", new CInt(b.getLocation().getBlockZ(), t), t);
+                    block.set("world", b.getLocation().getWorld().getName());
+                    block.set("block", b.getType().getName());
+                    array.put("combuster", block);
                 }
 
                 array.put("macrotype", new CString("entity", t));
@@ -134,8 +131,8 @@ public class MCEntityCombustByBlockEvent {
         }
 
         @Override
-        public MCBlock getBlock() {
-            return new BukkitMCBlock(e.getCombuster());
+        public Object getBlock() {
+            return (e.getCombuster() == null) ? CNull.NULL : new BukkitMCBlock(e.getCombuster());
         }
 
         @Override
@@ -153,7 +150,7 @@ public class MCEntityCombustByBlockEvent {
 
         public CInt getDuration();
         public boolean isCancelled();
-        public MCBlock getBlock();
+        public Object getBlock();
         public void setCancelled(boolean cancel);
         public void setDuration(int duration);
 
